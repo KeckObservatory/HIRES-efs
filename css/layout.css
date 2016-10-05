@@ -1,0 +1,176 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+input[type="text"]{
+  width:fill;
+}
+span {
+  height:20px;
+}
+#echelle {
+  left:0px;
+  top:0px;
+  /*width:100%;*/
+  height:100%;
+}
+#spectra-gif {
+  border: 1px solid black;
+  width:740px;
+  height:531px;
+}
+.data {
+  padding: 5px;
+  display: block;
+}
+#ui {
+  /*float: left;*/
+  position: relative;
+  padding-top: 10px;
+}
+.interface {
+  float: left;
+  padding-right: 20px;
+  min-width: 260px;
+}
+.button {
+  display: block;
+  height: 26px;
+  width: 100px;
+  background: green;
+  text-align: center;
+  padding-top: 10px;
+  padding-left: 0px;
+  font: 15px arial bold;
+  border: 1px solid black;
+  text-decoration: none;
+  list-style:none;
+  margin: 10px 0px 10px 0px;
+}
+.SetDetectorPosition {
+font-family: ‘DroidSans-Bold’;
+  text-transform:uppercase;
+  padding: 0px 10px 0px 8px;
+  -moz-border-radius-topright: 0.5em;
+  -moz-border-radius-bottomright: 0.5em;
+  -webkit-border-top-right-radius: 0.5em;
+  -webkit-border-bottom-right-radius: 0.5em;
+  border-top: 4px solid #ccc;
+  border-left: 4px solid #ccc;
+  border-right: 4px solid #ccc;
+  border-bottom: 4px solid #aaa;
+  -moz-border-top-colors:#aaa #fff #fff #fff;
+  -moz-border-right-colors:#aaa #dedede #efefef #fafafa;
+  -moz-border-left-colors:#aaa #dedede #efefef #fafafa;
+  -moz-border-bottom-colors:#aaa #dedede #efefef #fafafa;
+  display: inline;
+
+}
+.ClearMarkers {
+font-family: ‘DroidSans-Bold’;
+  text-transform:uppercase;
+  padding: 0px 10px 0px 8px;
+  -moz-border-radius-topright: 0.5em;
+  -moz-border-radius-bottomright: 0.5em;
+  -webkit-border-top-right-radius: 0.5em;
+  -webkit-border-bottom-right-radius: 0.5em;
+  border-top: 4px solid #ccc;
+  border-left: 4px solid #ccc;
+  border-right: 4px solid #ccc;
+  border-bottom: 4px solid #aaa;
+  -moz-border-top-colors:#aaa #fff #fff #fff;
+  -moz-border-right-colors:#aaa #dedede #efefef #fafafa;
+  -moz-border-left-colors:#aaa #dedede #efefef #fafafa;
+  -moz-border-bottom-colors:#aaa #dedede #efefef #fafafa;
+  display: inline;
+}
+#toggleColorRed {
+  font-family: ‘DroidSans-Bold’;
+  text-transform:uppercase;
+  color: white;
+  padding: 0px 8px 0px 12px;
+  -moz-border-radius-topleft: 0.5em;
+  -moz-border-radius-bottomleft: 0.5em;
+  -webkit-border-top-left-radius: 0.5em;
+  -webkit-border-bottom-left-radius: 0.5em;
+  border-top: 4px solid #aaa;
+  border-left: 4px solid #ccc;
+  border-right: 4px solid #ccc;
+  border-bottom: 4px solid #ccc;
+  -moz-border-top-colors:#aaa #bbb #ccc #ddd;
+  -moz-border-left-colors:#aaa #bbb #ccc #ddd;
+  -moz-border-bottom-colors:#aaa #bbb #ccc #ddd;
+  -moz-border-right-colors:#aaa #bbb #ccc #ddd;
+  background-color: #dd3333;
+  display: inline;
+}
+
+#toggleColorBlue {
+  font-family: ‘DroidSans-Bold’;
+  text-transform:uppercase;
+  color:white;
+  padding: 0px 10px 0px 8px;
+  -moz-border-radius-topright: 0.5em;
+  -moz-border-radius-bottomright: 0.5em;
+  -webkit-border-top-right-radius: 0.5em;
+  -webkit-border-bottom-right-radius: 0.5em;
+  border-top: 4px solid #ccc;
+  border-left: 4px solid #ccc;
+  border-right: 4px solid #ccc;
+  border-bottom: 4px solid #aaa;
+  -moz-border-top-colors:#aaa #fff #fff #fff;
+  -moz-border-right-colors:#aaa #dedede #efefef #fafafa;
+  -moz-border-left-colors:#aaa #dedede #efefef #fafafa;
+  -moz-border-bottom-colors:#aaa #dedede #efefef #fafafa;
+  background-color: #042262;
+  display: inline;
+}
+
+#container {
+  float: left;
+  width: 40%;
+  height: 100%;
+  padding-right: 10px;
+  }
+#detector {
+  position: absolute;
+  background-color: #e0eeee;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;     
+  user-select: none;
+  /*border: 2px solid black;*/
+  opacity: 0.6;
+  filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+#draggable {
+  width:50px;
+  height:50px;
+}
+.detectorbox {
+  padding:0px;
+  width:100%;
+  height:33%;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 0px;
+  font-family: ‘DroidSans-Bold’;
+  text-transform:uppercase;
+  font-size: 10px;
+}
+#first {
+  border-top: 1px solid black;
+}
+#final {
+  border-bottom: 1px solid black;
+}
+#wvtracker {
+  position: absolute;
+  width:5px;
+  height:5px;
+  background-color: black;
+}
+
