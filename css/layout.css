@@ -1,6 +1,7 @@
 body {
   margin: 0px;
   padding: 0px;
+  min-height: 100%;
 }
 input[type="text"]{
   width:fill;
@@ -8,15 +9,20 @@ input[type="text"]{
 span {
   height:20px;
 }
+#container {
+  float: left;
+  width: 600px;
+  height: 800px;
+  padding-right: 10px;
+}
 #echelle {
   left:0px;
   top:0px;
-  /*width:100%;*/
   height:100%;
 }
 #spectra-gif {
   border: 1px solid black;
-  width:740px;
+  width:700px;
   height:531px;
 }
 .data {
@@ -125,13 +131,6 @@ font-family: ‘DroidSans-Bold’;
   background-color: #042262;
   display: inline;
 }
-
-#container {
-  float: left;
-  width: 40%;
-  height: 100%;
-  padding-right: 10px;
-  }
 #detector {
   position: absolute;
   background-color: #e0eeee;

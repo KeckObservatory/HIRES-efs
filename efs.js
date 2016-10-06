@@ -1,4 +1,10 @@
 var echellecanvas = document.getElementById("echelle");
+var echeight = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("height"));
+var ecwidth = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("width"));
+console.log(ecwidth.toString()+", "+echeight.toString());
+echellecanvas.height=echeight;
+echellecanvas.width=ecwidth;
+
 var ctx = echellecanvas.getContext("2d");
 
 var spectrumcanvas = document.getElementById("spectra-gif");
@@ -358,7 +364,7 @@ function findLambdaLocation(waveln, set) {
       ctx.fillText(waveln.toString()+" \u212b",lambdax-(ordpoints[2]-ordpoints[0]),lambday-8);
 
     }
-    else {
+    else if ( (ordpoints[0]+((ordpoints[2]-ordpoints[0])/2))<(X_UPPER_LIMIT-10) ) {
       drawX(lambdax+(ordpoints[2]-ordpoints[0]),lambday);
       ctx.fillText(waveln.toString()+" \u212b",lambdax+(ordpoints[2]-ordpoints[0]),lambday-8);
 
@@ -400,8 +406,8 @@ function setDetectorPositionAngle() {
   document.getElementById("CentralOrder").innerHTML = "Central Order: "+centralorder.toString();
   document.getElementById("lambdainput").value = ecanglelambda.toPrecision(PRECISION).toString();
 
-  console.log(ecanglelambda.toString()+": "+findLambdaLocation(ecanglelambda,false).toString());
-  console.log(xdanglelambda.toString()+": "+findLambdaLocation(xdanglelambda,false).toString());
+  // console.log(ecanglelambda.toString()+": "+findLambdaLocation(ecanglelambda,false).toString());
+  // console.log(xdanglelambda.toString()+": "+findLambdaLocation(xdanglelambda,false).toString());
 
   var detectordraggable = document.getElementById('detector');
   detectordraggable.style.left = (lambdalocation[0]-detectordim[0]/2).toString() + 'px';
@@ -531,7 +537,7 @@ function setDetectorPositionWavelength() {
 })();
 
 function update() {
-    console.log("updating echelle");
+    // console.log("updating echelle");
     ZOOM = parseInt(document.getElementById("zoom").value)/2;
     ctx.beginPath();
     ctx.clearRect(0, 0, X_UPPER_LIMIT - X_LOWER_LIMIT, Y_UPPER_LIMIT - Y_LOWER_LIMIT);
