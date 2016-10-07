@@ -88,6 +88,8 @@ var drag=false;
 
 var detectordim = [0,0];
 
+var plottedwavelengths = [];
+
 function transform_mm_to_screen_pixels(mm) {
     var pixels = [0,0];
     pixels[0] = Math.round(FOCAL_PLANE_SCREEN_POSITION[0] + ( ZOOM * mm[0] )) + X_LOWER_LIMIT;
@@ -254,8 +256,16 @@ function drawEchelle() {
     // console.log("line from ("+pts[0].toString()+","+pts[1].toString()+") to ("+pts[2].toString()+","+pts[3].toString()+")");
   }
 
-  findLambdaLocation(parseInt(document.getElementById("lambdainput").value),false);
+  findLambdaLocation(parseInt(document.getElementById("lambdainput").value),false,false);
   setDetectorPositionWavelength();
+
+  console.log(plottedwavelengths.length);
+  for (var count=0; count<plottedwavelengths.length; count++) {
+    if (parseInt(plottedwavelengths[count]) < max_wavelength && parseInt(plottedwavelengths[count]) > min_wavelength) {
+      console.log(count.toString()+" "+plottedwavelengths[count].toString());
+      findLambdaLocation(plottedwavelengths[count],true,false);
+    } 
+  }
 
 }
 
@@ -329,11 +339,17 @@ function findLambdaOrderIndex(wav) {
 
 }
 
-function findLambdaLocation(waveln, set) {
+function findLambdaLocation(waveln, set, add) {
 
   if(waveln==0) {
     return [0,0];
   }
+
+  if(add != true) {
+    add=false;
+  }
+
+  waveln = parseInt(waveln);
   // var waveln = document.getElementById("FindLambda").value;
 
   // console.log("finding wavelength location");
@@ -353,8 +369,7 @@ function findLambdaLocation(waveln, set) {
   // console.log(lambdax.toString()+" "+lambday.toString())
 
   if (set) {
-    // document.getElementById("wvtracker").style.left = lambdax.toString()+"px";
-    // document.getElementById("wvtracker").style.top = lambday.toString()+"px";
+
     drawX(lambdax,lambday);
     ctx.font="10px Georgia";
     ctx.fillText(waveln.toString()+" \u212b",lambdax,lambday-8);
@@ -369,6 +384,13 @@ function findLambdaLocation(waveln, set) {
       ctx.fillText(waveln.toString()+" \u212b",lambdax+(ordpoints[2]-ordpoints[0]),lambday-8);
 
     }
+
+    if (add) {
+      plottedwavelengths.push(parseInt(waveln));
+      console.log(plottedwavelengths);
+
+    }
+
   }
 
   return [lambdax,lambday];
@@ -401,7 +423,7 @@ function setDetectorPositionAngle() {
   var centralorder = order[findLambdaOrderIndex(xdanglelambda)];
   var ecanglelambda = Math.abs( Math.sin((setecangle+ecdeltad)*(Math.PI/180)) * ( 2.0 * angstroms_per_micron * ecsigma * Math.cos( (Math.PI/180) * ecthetad ) ) / centralorder);
 
-  var lambdalocation = findLambdaLocation(ecanglelambda);
+  var lambdalocation = findLambdaLocation(ecanglelambda,false,false);
 
   document.getElementById("CentralOrder").innerHTML = "Central Order: "+centralorder.toString();
   document.getElementById("lambdainput").value = ecanglelambda.toPrecision(PRECISION).toString();
@@ -419,7 +441,7 @@ function setDetectorPositionAngle() {
 function setDetectorPositionWavelength() {
   // console.log("set");
   var setlambda = parseFloat(document.getElementById("lambdainput").value);
-  var detcoords = findLambdaLocation(setlambda, false);
+  var detcoords = findLambdaLocation(setlambda, false,false);
   var detectordraggable = document.getElementById('detector');
   detectordraggable.style.left = (detcoords[0]-detectordim[0]/2).toString() + 'px';
   detectordraggable.style.top = (detcoords[1]-detectordim[1]/2).toString() + 'px';
@@ -535,6 +557,11 @@ function setDetectorPositionWavelength() {
   }
 
 })();
+
+function clearMarkers() {
+  plottedwavelengths = [];
+  update();
+}
 
 function update() {
     // console.log("updating echelle");
