@@ -1,9 +1,9 @@
 var echellecanvas = document.getElementById("echelle");
-var echeight = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("height"));
-var ecwidth = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("width"));
-console.log(ecwidth.toString()+", "+echeight.toString());
-echellecanvas.height=echeight;
-echellecanvas.width=ecwidth;
+// var echeight = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("height"));
+// var ecwidth = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("width"));
+// console.log(ecwidth.toString()+", "+echeight.toString());
+// echellecanvas.height=echeight;
+// echellecanvas.width=ecwidth;
 
 var ctx = echellecanvas.getContext("2d");
 
@@ -20,6 +20,9 @@ const MAXO = 100;
 const DETECTOR_GAP = 0.1;
 const MM_PER_PIXEL = 0.015;
 const PRECISION = 4;
+
+// const arcsec_width = 7;
+const ARCSECONDS_PER_PIXEL = 0.191;
 
 var color = "red";
 
@@ -56,6 +59,8 @@ var x = new Array(MAXO);     // cross disperser displacement at camera (mm)
 var delx = new Array(MAXO);    // tilt delta (mm)
 var minwv = new Array(MAXO);
 
+var linewidths = new Array(MAXO);
+
 var base;
 var max_order_number;
 var min_order_number;
@@ -69,7 +74,8 @@ var X_LOWER_LIMIT = echellerect.left;          //  Lower limit on coord in X dir
 var X_UPPER_LIMIT = echellerect.right;          //  Upper limit on coord in X direction
 var Y_LOWER_LIMIT = echellerect.top;          //  Lower limit on coord in Y direction
 var Y_UPPER_LIMIT = echellerect.bottom;
-var ZOOM = 4.5*((echellerect.right-echellerect.left)/600);
+// var ZOOM = 4.5*((echellerect.right-echellerect.left)/600);
+var ZOOM=4.5;
 
 // console.log(ZOOM);
 
@@ -127,7 +133,7 @@ function drawEchelle() {
     ecthetad = 5.000;
     ecdeltad = 70.53;
 
-    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT - 25 + (X_UPPER_LIMIT - X_LOWER_LIMIT) / 2, Y_LOWER_LIMIT + (20*ZOOM) + (Y_UPPER_LIMIT - Y_LOWER_LIMIT) / 2];
+    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT - 25 + 200 + (20*ZOOM), Y_LOWER_LIMIT + 300 + (30*ZOOM)];
 
   }
 
@@ -152,7 +158,7 @@ function drawEchelle() {
     ecthetad = 5.000;
     ecdeltad = 70.58;
 
-    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT - 25 + (X_UPPER_LIMIT - X_LOWER_LIMIT) / 2, Y_LOWER_LIMIT + (30*ZOOM) + (Y_UPPER_LIMIT - Y_LOWER_LIMIT) / 2];
+    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT - 25 + 200 + (20*ZOOM), Y_LOWER_LIMIT + (35*ZOOM) + 425];
 
   }
 
@@ -161,10 +167,9 @@ function drawEchelle() {
   detector.style.width = detectordim[0].toString()+'px';
   detector.style.height = detectordim[1].toString()+'px';
   
-  // var gappx
-  // var chips = document.getElementsByClassName("detectorbox");
-  // chips[1].style.borderTop = "px solid black";
-  // chips[2].style.borderTop = "px solid black";
+  var arcsec_width = parseFloat(document.getElementById('switchSlit').value);
+  var line_width = (MM_PER_PIXEL*arcsec_width*ZOOM/ARCSECONDS_PER_PIXEL);
+  // console.log(line_width); Math.round
 
   f2dbdl = camera_focal_length * mm_per_meter / ( sigma * Math.cos( (delta - theta) * Math.PI/180 ) );
 
@@ -222,34 +227,54 @@ function drawEchelle() {
   }
 
   for (i=1; i<=number_of_orders; i++) {
-        var mm1 = [0, 0];    // blue end of an order in focal plane mm
-        var mm2 = [0, 0];    // red  end of an order in focal plane mm
-        var scr1 = [0, 0];    // blue end of an order in screen pixels
-        var scr2 = [0, 0];    // red  end of an order in screen pixels
+    var mm1 = [0, 0];    // blue end of an order in focal plane mm
+    var mm2 = [0, 0];    // red  end of an order in focal plane mm
+    var scr1 = [0, 0];    // blue end of an order in screen pixels
+    var scr2 = [0, 0];    // red  end of an order in screen pixels
 
-        mm1[0] = -0.5 * FSR_2beta[i];
-        mm2[0] = 0.5 * FSR_2beta[i];
+    mm1[0] = -0.5 * FSR_2beta[i];
+    mm2[0] = 0.5 * FSR_2beta[i];
 
-        mm1[1] = 0.5 * (x[i] + x[i - 1]);
-        mm2[1] = 0.5 * (x[i] + x[i + 1]);
+    mm1[1] = 0.5 * (x[i] + x[i - 1]);
+    mm2[1] = 0.5 * (x[i] + x[i + 1]);
 
-        scr1 = transform_mm_to_screen_pixels(mm1);
-        scr2 = transform_mm_to_screen_pixels(mm2);
+    scr1 = transform_mm_to_screen_pixels(mm1);
+    scr2 = transform_mm_to_screen_pixels(mm2);
 
-        endpoints.push([scr1[0], scr1[1], scr2[0], scr2[1]]);
-        // drawable.push([scr1[0]-30, scr1[1]+50, scr2[0]-30, scr2[1]+50])
-        // console.log(endpoints[i-1]);
+    endpoints.push([scr1[0], scr1[1], scr2[0], scr2[1]]);
+    // these are the midpoints of each echelle
   }
 
+  // // find width of each order
+  // for (i=1; i<=number_of_orders; i++) {
+
+  //   linewidths[i] = ;
+  // }
+
   ctx.beginPath();
-  ctx.strokeStyle = color;
+  if (ZOOM>4) ctx.strokeStyle = 'black';
+  else {
+    if (color=="red") ctx.strokeStyle = 'red';
+    else ctx.strokeStyle = 'blue';
+  }
+  
+  if (color=="red") ctx.fillStyle = 'rgba(255,0,0,0.5)';
+  else if (color=="blue") ctx.fillStyle = 'rgba(0,0,255,0.5)';
+
+  ctx.lineWidth = 1;
 
   // draw the echellogram!
   for (i = 0; i < endpoints.length; i++) {
     var pts = endpoints[i];
-    ctx.moveTo(pts[0],pts[1]);
-    ctx.lineTo(pts[2],pts[3]);
+    var thickness = Math.round(line_width/2);
+    ctx.moveTo(pts[0],pts[1]+thickness);
+    ctx.lineTo(pts[2],pts[3]+thickness);
+    ctx.lineTo(pts[2],pts[3]-thickness);
+    ctx.lineTo(pts[0],pts[1]-thickness);
+    ctx.lineTo(pts[0],pts[1]+thickness);
     ctx.stroke();
+    ctx.closePath();
+    ctx.fill();
 
     minwv[i] = findLambda(i,pts[0],pts[1]);
 
@@ -259,10 +284,10 @@ function drawEchelle() {
   findLambdaLocation(parseInt(document.getElementById("lambdainput").value),false,false);
   setDetectorPositionWavelength();
 
-  console.log(plottedwavelengths.length);
+  // console.log(plottedwavelengths.length);
   for (var count=0; count<plottedwavelengths.length; count++) {
     if (parseInt(plottedwavelengths[count]) < max_wavelength && parseInt(plottedwavelengths[count]) > min_wavelength) {
-      console.log(count.toString()+" "+plottedwavelengths[count].toString());
+      // console.log(count.toString()+" "+plottedwavelengths[count].toString());
       findLambdaLocation(plottedwavelengths[count],true,false);
     } 
   }
@@ -401,7 +426,8 @@ function drawX(posx,posy) {
 
   var size = 3;
   ctx.beginPath();
-  ctx.strokeStyle="black";
+  ctx.strokeStyle="cyan";
+  ctx.fillStyle="cyan";
   ctx.moveTo(posx-size,posy-size);
   ctx.lineTo(posx+size,posy+size);
   ctx.stroke();
@@ -461,27 +487,60 @@ function setDetectorPositionWavelength() {
   adjusted_y=0;
   ord=1;
 
+  function getMouse(e){
+    var posx;
+    var posy;
+
+    if (!e) var e = window.event;
+
+    if (e.pageX || e.pageY) {
+      posx = e.pageX;
+      posy = e.pageY;
+    }
+    else if (e.clientX || e.clientY) {
+      posx = e.clientX + document.body.scrollLeft + document.getElementById("container").scrollLeft;
+      posy = e.clientY + document.body.scrollTop  + document.getElementById("container").scrollTop;
+    }
+
+    return [posx,posy];
+
+  }
+
   document.onmousemove = handleMouseMove;
-  function handleMouseMove(event) {
+  function handleMouseMove(e) {
     var eventDoc, doc, body, pageX, pageY;
 
-    event = event || window.event; //makes stuff work in IE
+    // event = event || window.event; //makes stuff work in IE
 
-    if (event.pageX == null && event.clientX != null) {
-        eventDoc = (event.target && event.target.ownerDocument) || document;
-        doc = eventDoc.documentElement;
-        body = eventDoc.body;
+    // if (event.pageX == null && event.clientX != null) {
+    //     eventDoc = (event.target && event.target.ownerDocument) || document;
+    //     doc = eventDoc.documentElement;
+    //     body = eventDoc.body;
 
-        event.pageX = event.clientX +
-          (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
-          (doc && doc.clientLeft || body && body.clientLeft || 0);
-        event.pageY = event.clientY +
-          (doc && doc.scrollTop  || body && body.scrollTop  || 0) -
-          (doc && doc.clientTop  || body && body.clientTop  || 0 );
-      }
+    //     event.pageX = event.clientX +
+    //       (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
+    //       (doc && doc.clientLeft || body && body.clientLeft || 0);
+    //     event.pageY = event.clientY +
+    //       (doc && doc.scrollTop  || body && body.scrollTop  || 0) -
+    //       (doc && doc.clientTop  || body && body.clientTop  || 0 );
+    //   }
 
-    adjusted_x = event.pageX;
-    adjusted_y = event.pageY;
+    var posx;
+    var posy;
+
+    if (!e) var e = window.event;
+
+    if (e.pageX || e.pageY) {
+      posx = e.pageX;
+      posy = e.pageY;
+    }
+    else if (e.clientX || e.clientY) {
+      posx = e.clientX + document.body.scrollLeft + document.getElementById("container").scrollLeft;
+      posy = e.clientY + document.body.scrollTop  + document.getElementById("container").scrollTop;
+    }
+
+    adjusted_x = posx;
+    adjusted_y = posy;
     // <span id="Coords" class="data">Cursor location</span>
     // document.getElementById("Coords").innerHTML = "Cursor location: ("+adjusted_x.toString()+", "+adjusted_y.toString()+")";
     ord = findOrderIndex(adjusted_x,adjusted_y);
@@ -515,26 +574,25 @@ function setDetectorPositionWavelength() {
 
   document.onclick = handleClick;
 
-  function handleClick(event) {
+  function handleClick(e) {
     var eventDoc, doc, body, pageX, pageY;
 
-    event = event || window.event; //makes stuff work in IE
+    var posx;
+    var posy;
 
-    if (event.pageX == null && event.clientX != null) {
-        eventDoc = (event.target && event.target.ownerDocument) || document;
-        doc = eventDoc.documentElement;
-        body = eventDoc.body;
+    if (!e) var e = window.event;
 
-        event.pageX = event.clientX +
-          (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
-          (doc && doc.clientLeft || body && body.clientLeft || 0);
-        event.pageY = event.clientY +
-          (doc && doc.scrollTop  || body && body.scrollTop  || 0) -
-          (doc && doc.clientTop  || body && body.clientTop  || 0 );
+    if (e.pageX || e.pageY) {
+      posx = e.pageX;
+      posy = e.pageY;
+    }
+    else if (e.clientX || e.clientY) {
+      posx = e.clientX + document.body.scrollLeft + document.getElementById("container").scrollLeft;
+      posy = e.clientY + document.body.scrollTop  + document.getElementById("container").scrollTop;
     }
 
     if (!drag) {
-      if (event.pageX < X_UPPER_LIMIT && event.pageY < Y_UPPER_LIMIT) {
+      if (posx < X_UPPER_LIMIT && posy < Y_UPPER_LIMIT) {
         spectrumgraph.onload = function(){
           // var dim = {
           //   width:parseInt(window.getComputedStyle(spectrumcanvas,null).getPropertyValue("width")),
@@ -565,7 +623,7 @@ function clearMarkers() {
 
 function update() {
     // console.log("updating echelle");
-    ZOOM = parseInt(document.getElementById("zoom").value)/2;
+    ZOOM = parseFloat(document.getElementById("zoom").value)/2;
     ctx.beginPath();
     ctx.clearRect(0, 0, X_UPPER_LIMIT - X_LOWER_LIMIT, Y_UPPER_LIMIT - Y_LOWER_LIMIT);
     
@@ -591,6 +649,19 @@ function tog(Color) {
   }
 
   update();
+}
+
+function detectorTog() {
+  var detector = document.getElementById("detector");
+
+  if (detector.style.display != "none" ) {
+    detector.style.display = "none";
+    document.getElementById("toggleDetector").value = "show detector";
+  }
+  else {
+    detector.style.display = "block";
+    document.getElementById("toggleDetector").value = "hide detector";
+  }
 }
 
 function updateAllAngles() {

@@ -15,7 +15,7 @@
       <div class="detectorbox" id="final">ccd1</div>
     </div>
   </div>
-  <canvas id="echelle" ></canvas>
+  <canvas id="echelle" width=1000 height=2000></canvas>
 </div>
 
 <canvas id="spectra-gif" class="data" width=740px height=531px ></canvas>
@@ -26,12 +26,15 @@
     <span id="OrderNum" class="data">Order</span>
     <span id="EchelleAngle" class="data">Echelle Angle</span>
     <span id="CrossDisperserAngle" class="data">Cross Disperser Angle</span>
+    <span id="detectorTog" class="data">
+      <input id="toggleDetector" onClick="detectorTog();" type="button" value="hide detector">
+    </span>
   </div>
   <div id="input" class="interface" width=400px>
     <span id="FindLambda" class="data">Locate Wavelength: <input type="text" id="lambdainput" value=0 />
-      <input class="SetDetectorPosition" type="button" value="X" onClick="findLambdaLocation(document.getElementById('lambdainput').value,true);") />
+      <input class="SetDetectorPosition" type="button" value="X" onClick="findLambdaLocation(document.getElementById('lambdainput').value,true,true);") />
       <input class="SetDetectorPosition" type="button" value="Go To" onClick="setDetectorPositionWavelength();") />
-      <input class="ClearMarkers" type="button" value="Clear" onClick="update();") />
+      <input class="ClearMarkers" type="button" value="Clear" onClick="clearMarkers();") />
     </span>
     <span id="CentralOrder" class="data">Central Order:</span>
     <span class="data">Set Echelle Angle: 
@@ -42,9 +45,16 @@
       <input class="SetDetectorPosition" type="button" value="Go To Angle" onClick="setDetectorPositionAngle();") />
     </span>
     <span id="toggle" class="data" value="red">
-      Zoom: <input type="range" id="zoom" min="4" max="14" value="9" onchange="update()"/>
+      Zoom: <input type="range" id="zoom" min="4" max="24" value="9" onchange="update()"/>
       <input id="toggleColorRed" onClick="tog('red')" type="button" value="Red">
       <input id="toggleColorBlue" onClick="tog('blue')" type="button" value="Blue">
+      <select id="switchSlit" onChange="update();">
+        <option value='3.5'>Slit Length</option>
+        <option value='3.5'>3.5"</option>
+        <option value='7'>7.0"</option>
+        <option value='14'>14.0"</option>
+        <option value='28'>28.0"</option>
+      </select>
     </span>
   </div>
 
