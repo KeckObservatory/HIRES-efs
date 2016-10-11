@@ -494,12 +494,12 @@ function setDetectorPositionWavelength() {
     if (!e) var e = window.event;
 
     if (e.pageX || e.pageY) {
-      posx = e.pageX;
-      posy = e.pageY;
+      posx = e.pageX + document.getElementById("container").scrollLeft;
+      posy = e.pageY + document.getElementById("container").scrollTop;
     }
     else if (e.clientX || e.clientY) {
-      posx = e.clientX + document.body.scrollLeft + document.getElementById("container").scrollLeft;
-      posy = e.clientY + document.body.scrollTop  + document.getElementById("container").scrollTop;
+      posx = e.clientX + document.getElementById("container").scrollLeft;
+      posy = e.clientY + document.getElementById("container").scrollTop;
     }
 
     return [posx,posy];
@@ -531,12 +531,14 @@ function setDetectorPositionWavelength() {
     if (!e) var e = window.event;
 
     if (e.pageX || e.pageY) {
-      posx = e.pageX;
-      posy = e.pageY;
+      posx = e.pageX + document.getElementById("container").scrollLeft;
+      posy = e.pageY + document.getElementById("container").scrollTop;
+
+      console.log("("+posx.toString()+","+posy.toString()+")");
     }
     else if (e.clientX || e.clientY) {
-      posx = e.clientX + document.body.scrollLeft + document.getElementById("container").scrollLeft;
-      posy = e.clientY + document.body.scrollTop  + document.getElementById("container").scrollTop;
+      posx = e.clientX + document.getElementById("container").scrollLeft;
+      posy = e.clientY + document.getElementById("container").scrollTop;
     }
 
     adjusted_x = posx;
@@ -583,12 +585,12 @@ function setDetectorPositionWavelength() {
     if (!e) var e = window.event;
 
     if (e.pageX || e.pageY) {
-      posx = e.pageX;
-      posy = e.pageY;
+      posx = e.pageX + document.getElementById("container").scrollLeft;
+      posy = e.pageY + document.getElementById("container").scrollTop;
     }
     else if (e.clientX || e.clientY) {
-      posx = e.clientX + document.body.scrollLeft + document.getElementById("container").scrollLeft;
-      posy = e.clientY + document.body.scrollTop  + document.getElementById("container").scrollTop;
+      posx = e.clientX + document.getElementById("container").scrollLeft;
+      posy = e.clientY + document.getElementById("container").scrollTop;
     }
 
     if (!drag) {
