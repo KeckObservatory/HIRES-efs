@@ -255,11 +255,11 @@ function drawEchelle() {
   if (ZOOM>4) ctx.strokeStyle = 'black';
   else {
     if (color=="red") ctx.strokeStyle = 'red';
-    else ctx.strokeStyle = 'blue';
+    else ctx.strokeStyle = '#308de3';
   }
   
   if (color=="red") ctx.fillStyle = 'rgba(255,0,0,0.5)';
-  else if (color=="blue") ctx.fillStyle = 'rgba(0,0,255,0.5)';
+  else if (color=="blue") ctx.fillStyle = 'rgba(0,159,255,0.5)';
 
   ctx.lineWidth = 1;
 
@@ -426,8 +426,8 @@ function drawX(posx,posy) {
 
   var size = 3;
   ctx.beginPath();
-  ctx.strokeStyle="cyan";
-  ctx.fillStyle="cyan";
+  ctx.strokeStyle="white";
+  ctx.fillStyle="white";
   ctx.moveTo(posx-size,posy-size);
   ctx.lineTo(posx+size,posy+size);
   ctx.stroke();
@@ -534,7 +534,7 @@ function setDetectorPositionWavelength() {
       posx = e.pageX + document.getElementById("container").scrollLeft;
       posy = e.pageY + document.getElementById("container").scrollTop;
 
-      console.log("("+posx.toString()+","+posy.toString()+")");
+      // console.log("("+posx.toString()+","+posy.toString()+")");
     }
     else if (e.clientX || e.clientY) {
       posx = e.clientX + document.getElementById("container").scrollLeft;
@@ -646,7 +646,7 @@ function tog(Color) {
     document.getElementById('toggleColorRed').style.backgroundColor = "#ee3333";
   }
   else if (Color == "blue") {
-    document.getElementById('toggleColorBlue').style.backgroundColor = "#4ca6ff";
+    document.getElementById('toggleColorBlue').style.backgroundColor = "#05c3fb";
     document.getElementById('toggleColorRed').style.backgroundColor = "#871919";
   }
 
