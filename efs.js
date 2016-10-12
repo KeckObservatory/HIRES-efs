@@ -71,7 +71,7 @@ var temp;
 var echellerect = echellecanvas.getBoundingClientRect();
 // console.log(echellerect.top, echellerect.right, echellerect.bottom, echellerect.left);
 var X_LOWER_LIMIT = 10;          //  Lower limit on coord in X direction
-var X_UPPER_LIMIT = echellerect.right;          //  Upper limit on coord in X direction
+var X_UPPER_LIMIT = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("width"));      //  Upper limit on coord in X direction
 var Y_LOWER_LIMIT = 10;          //  Lower limit on coord in Y direction
 var Y_UPPER_LIMIT = echellerect.bottom;
 // var ZOOM = 4.5*((echellerect.right-echellerect.left)/600);
@@ -608,7 +608,9 @@ function setDetectorPositionWavelength() {
           // console.log(dim.width);
           // console.log(dim.height);
         };
+
         spectrumgraph.src = "spectra/order"+order[ord].toString()+".gif";
+        document.getElementById("popup").src = "spectra/order"+order[ord].toString()+".gif";
       }
     }
 
@@ -632,7 +634,7 @@ function update() {
     // console.log("updating echelle");
     ZOOM = parseFloat(document.getElementById("zoom").value)/2;
     ctx.beginPath();
-    ctx.clearRect(0, 0, X_UPPER_LIMIT - X_LOWER_LIMIT, Y_UPPER_LIMIT - Y_LOWER_LIMIT);
+    ctx.clearRect(0, 0, 1000, 2000);
     
     // color=something
     // console.log("drawing echelle, zoom="+ZOOM.toString());
@@ -663,11 +665,11 @@ function detectorTog() {
 
   if (detector.style.display != "none" ) {
     detector.style.display = "none";
-    document.getElementById("toggleDetector").value = "show detector";
+    document.getElementById("toggleDetector").value = "Show Detector";
   }
   else {
     detector.style.display = "block";
-    document.getElementById("toggleDetector").value = "hide detector";
+    document.getElementById("toggleDetector").value = "Hide Detector";
   }
 }
 
