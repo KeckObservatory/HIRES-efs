@@ -133,7 +133,7 @@ function drawEchelle() {
     ecthetad = 5.000;
     ecdeltad = 70.53;
 
-    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT - 25 + 200 + (20*ZOOM), Y_LOWER_LIMIT + 300 + (30*ZOOM)];
+    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT - 25 + 200 + (20*ZOOM), Y_LOWER_LIMIT + 275 + (35*ZOOM)];
 
   }
 
@@ -158,7 +158,7 @@ function drawEchelle() {
     ecthetad = 5.000;
     ecdeltad = 70.58;
 
-    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT - 25 + 200 + (20*ZOOM), Y_LOWER_LIMIT + (35*ZOOM) + 425];
+    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT - 25 + 200 + (20*ZOOM), Y_LOWER_LIMIT + (40*ZOOM) + 400];
 
   }
 
@@ -252,7 +252,7 @@ function drawEchelle() {
   // }
 
   ctx.beginPath();
-  if (ZOOM>4) ctx.strokeStyle = 'black';
+  if (ZOOM>=4) ctx.strokeStyle = 'black';
   else {
     if (color=="red") ctx.strokeStyle = 'red';
     else ctx.strokeStyle = '#308de3';
@@ -442,8 +442,8 @@ function setDetectorPositionAngle() {
   var setecangle = parseFloat(document.getElementById("FindEchelleAngle").value);
   var setxdangle = parseFloat(document.getElementById("FindCrossDisperserAngle").value);
 
-  document.getElementById("EchelleAngle").innerHTML = "Echelle Angle = "+setecangle.toString()+String.fromCharCode(176);
-  document.getElementById("CrossDisperserAngle").innerHTML = "Cross Disperser Angle = "+setxdangle.toString()+String.fromCharCode(176);
+  document.getElementById("EchelleAngle").innerHTML = "Echelle Angle:<br>"+setecangle.toString()+String.fromCharCode(176);
+  document.getElementById("CrossDisperserAngle").innerHTML = "Cross Disperser Angle:<br>"+setxdangle.toString()+String.fromCharCode(176);
 
   var xdanglelambda = Math.abs( Math.sin((setxdangle+xddeltad)*(Math.PI/180)) * ( 2.0 * angstroms_per_micron * xdsigma * Math.cos( (Math.PI/180) * (xdalfbet*0.5) ) ) );
   var centralorder = order[findLambdaOrderIndex(xdanglelambda)];
@@ -566,10 +566,8 @@ function setDetectorPositionWavelength() {
 
       ecangle = ((180/Math.PI)*(Math.asin( order[ord] * lambda / ( 2.0 * angstroms_per_micron * ecsigma * Math.cos( (Math.PI/180)*ecthetad) ))) - ecdeltad).toPrecision(PRECISION);
       xdangle = ((180/Math.PI)*(Math.asin( lambda / ( 2.0 * angstroms_per_micron * xdsigma * Math.cos( (Math.PI/180)*(xdalfbet*0.5) )))) - xddeltad).toPrecision(PRECISION);
-      document.getElementById("EchelleAngle").innerHTML = "Echelle Angle = "+ecangle.toString()+String.fromCharCode(176);
-      document.getElementById("CrossDisperserAngle").innerHTML = "Cross Disperser Angle = "+xdangle.toString()+String.fromCharCode(176);
-      document.getElementById("CentralOrder").innerHTML = "Central Order: "+order[ord].toString();
-    
+      document.getElementById("EchelleAngle").innerHTML = "Echelle Angle:<br>"+ecangle.toString()+String.fromCharCode(176);
+      document.getElementById("CrossDisperserAngle").innerHTML = "Cross Disperser Angle:<br>"+xdangle.toString()+String.fromCharCode(176);    
     }
 
   }
