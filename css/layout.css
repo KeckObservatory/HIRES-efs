@@ -55,7 +55,7 @@ span {
 #container {
   float: left;
   width: 40%;
-  height: 750px;
+  height: 97%;
   margin: 10px;
   overflow: scroll;
   border: 1px solid black;
@@ -100,7 +100,7 @@ span {
 
 #ui-top {
   margin-bottom: 20px;
-  height:35%;
+  min-height:35%;
 }
 
 #ui-bottom {
@@ -133,15 +133,15 @@ span {
 
 #settings {
   width:30%;
-  vertical-align: middle;
+  position:relative;
+}
+#toggle {
+  position: absolute;
+  transform: translate(0%,30%);
 }
 
 .settings-item {
   margin-bottom: 10px;
-}
-
-#toggle {
-  display:inline-block;
 }
 
 .button {
