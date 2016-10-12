@@ -70,9 +70,9 @@ var temp;
 
 var echellerect = echellecanvas.getBoundingClientRect();
 // console.log(echellerect.top, echellerect.right, echellerect.bottom, echellerect.left);
-var X_LOWER_LIMIT = echellerect.left;          //  Lower limit on coord in X direction
+var X_LOWER_LIMIT = 10;          //  Lower limit on coord in X direction
 var X_UPPER_LIMIT = echellerect.right;          //  Upper limit on coord in X direction
-var Y_LOWER_LIMIT = echellerect.top;          //  Lower limit on coord in Y direction
+var Y_LOWER_LIMIT = 10;          //  Lower limit on coord in Y direction
 var Y_UPPER_LIMIT = echellerect.bottom;
 // var ZOOM = 4.5*((echellerect.right-echellerect.left)/600);
 var ZOOM=4.5;
@@ -133,7 +133,7 @@ function drawEchelle() {
     ecthetad = 5.000;
     ecdeltad = 70.53;
 
-    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT - 25 + 200 + (20*ZOOM), Y_LOWER_LIMIT + 275 + (35*ZOOM)];
+    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT + 175 + (20*ZOOM), Y_LOWER_LIMIT + 275 + (35*ZOOM)];
 
   }
 
@@ -158,7 +158,7 @@ function drawEchelle() {
     ecthetad = 5.000;
     ecdeltad = 70.58;
 
-    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT - 25 + 200 + (20*ZOOM), Y_LOWER_LIMIT + (40*ZOOM) + 400];
+    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT + 175 + (20*ZOOM), Y_LOWER_LIMIT + (40*ZOOM) + 400];
 
   }
 
@@ -531,14 +531,14 @@ function setDetectorPositionWavelength() {
     if (!e) var e = window.event;
 
     if (e.pageX || e.pageY) {
-      posx = e.pageX + document.getElementById("container").scrollLeft;
-      posy = e.pageY + document.getElementById("container").scrollTop;
+      posx = e.pageX + document.getElementById("container").scrollLeft - X_LOWER_LIMIT;
+      posy = e.pageY + document.getElementById("container").scrollTop - Y_LOWER_LIMIT;
 
       // console.log("("+posx.toString()+","+posy.toString()+")");
     }
     else if (e.clientX || e.clientY) {
-      posx = e.clientX + document.getElementById("container").scrollLeft;
-      posy = e.clientY + document.getElementById("container").scrollTop;
+      posx = e.clientX + document.getElementById("container").scrollLeft - X_LOWER_LIMIT;
+      posy = e.clientY + document.getElementById("container").scrollTop - Y_LOWER_LIMIT;
     }
 
     adjusted_x = posx;
@@ -583,12 +583,12 @@ function setDetectorPositionWavelength() {
     if (!e) var e = window.event;
 
     if (e.pageX || e.pageY) {
-      posx = e.pageX + document.getElementById("container").scrollLeft;
-      posy = e.pageY + document.getElementById("container").scrollTop;
+      posx = e.pageX + document.getElementById("container").scrollLeft - X_LOWER_LIMIT;
+      posy = e.pageY + document.getElementById("container").scrollTop - Y_LOWER_LIMIT;
     }
     else if (e.clientX || e.clientY) {
-      posx = e.clientX + document.getElementById("container").scrollLeft;
-      posy = e.clientY + document.getElementById("container").scrollTop;
+      posx = e.clientX + document.getElementById("container").scrollLeft - X_LOWER_LIMIT;
+      posy = e.clientY + document.getElementById("container").scrollTop - Y_LOWER_LIMIT;
     }
 
     if (!drag) {
