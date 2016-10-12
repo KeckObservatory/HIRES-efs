@@ -91,6 +91,7 @@ var cross_disperser_wavelength;
 var xdangle;
 
 var drag=false;
+var clear=false;
 
 var detectordim = [0,0];
 
@@ -282,7 +283,10 @@ function drawEchelle() {
   }
 
   findLambdaLocation(parseInt(document.getElementById("lambdainput").value),false,false);
-  setDetectorPositionWavelength();
+  
+  if (!clear) {
+    setDetectorPositionWavelength();
+  }
 
   // console.log(plottedwavelengths.length);
   for (var count=0; count<plottedwavelengths.length; count++) {
@@ -291,6 +295,8 @@ function drawEchelle() {
       findLambdaLocation(plottedwavelengths[count],true,false);
     } 
   }
+
+  clear=false;
 
 }
 
@@ -618,6 +624,7 @@ function setDetectorPositionWavelength() {
 
 function clearMarkers() {
   plottedwavelengths = [];
+  clear=true;
   update();
 }
 
