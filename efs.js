@@ -1,9 +1,9 @@
 var echellecanvas = document.getElementById("echelle");
 // var echeight = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("height"));
-// var ecwidth = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("width"));
+var ecwidth = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("width"));
 // console.log(ecwidth.toString()+", "+echeight.toString());
 // echellecanvas.height=echeight;
-// echellecanvas.width=ecwidth;
+echellecanvas.width=1.5 * ecwidth;
 
 var ctx = echellecanvas.getContext("2d");
 
@@ -466,8 +466,8 @@ function setDetectorPositionAngle() {
   // console.log(xdanglelambda.toString()+": "+findLambdaLocation(xdanglelambda,false).toString());
 
   var detectordraggable = document.getElementById('detector');
-  detectordraggable.style.left = (lambdalocation[0]-detectordim[0]/2).toString() + 'px';
-  detectordraggable.style.top = (lambdalocation[1]-detectordim[1]/2).toString() + 'px';
+  detectordraggable.style.left = (X_LOWER_LIMIT+lambdalocation[0]-detectordim[0]/2).toString() + 'px';
+  detectordraggable.style.top = (Y_LOWER_LIMIT+lambdalocation[1]-detectordim[1]/2).toString() + 'px';
 
 }
 
@@ -487,6 +487,9 @@ function setDetectorPositionWavelength() {
   document.getElementById("EchelleAngle").innerHTML = "Echelle Angle = "+ecangle.toString()+String.fromCharCode(176);
   document.getElementById("CrossDisperserAngle").innerHTML = "Cross Disperser Angle = "+xdangle.toString()+String.fromCharCode(176);
 
+  if (document.getElementById("toggleDetector").value == "Show Detector") {
+    detectorTog();
+  }
 }
 
 (function () {
@@ -570,8 +573,8 @@ function setDetectorPositionWavelength() {
 
       if(drag) {
         var detectordraggable = document.getElementById('detector');
-        detectordraggable.style.left = (adjusted_x-detectordim[0]/2).toString() + 'px';
-        detectordraggable.style.top = (adjusted_y-detectordim[1]/2).toString() + 'px';
+        detectordraggable.style.left = (e.pageX-detectordim[0]/2).toString() + 'px';
+        detectordraggable.style.top = (e.pageY-detectordim[1]/2).toString() + 'px';
 
         document.getElementById("lambdainput").value = lambda.toString();
 
