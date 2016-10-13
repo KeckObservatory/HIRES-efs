@@ -24,6 +24,8 @@ const PRECISION = 4;
 // const arcsec_width = 7;
 const ARCSECONDS_PER_PIXEL = 0.191;
 
+const MARKER_COLOR = "white";
+
 var color = "red";
 
 var sigma, delta, theta;    // inputs to the base calculation (Schroeder, 87)
@@ -134,7 +136,7 @@ function drawEchelle() {
     ecthetad = 5.000;
     ecdeltad = 70.53;
 
-    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT + 175 + (20*ZOOM), Y_LOWER_LIMIT + 275 + (35*ZOOM)];
+    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT + 225 + (20*ZOOM), Y_LOWER_LIMIT + 275 + (35*ZOOM)];
 
   }
 
@@ -159,7 +161,7 @@ function drawEchelle() {
     ecthetad = 5.000;
     ecdeltad = 70.58;
 
-    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT + 175 + (20*ZOOM), Y_LOWER_LIMIT + (40*ZOOM) + 400];
+    FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT + 225 + (20*ZOOM), Y_LOWER_LIMIT + (40*ZOOM) + 400];
 
   }
 
@@ -432,8 +434,8 @@ function drawX(posx,posy) {
 
   var size = 3;
   ctx.beginPath();
-  ctx.strokeStyle="white";
-  ctx.fillStyle="white";
+  ctx.strokeStyle=MARKER_COLOR;
+  ctx.fillStyle=MARKER_COLOR;
   ctx.moveTo(posx-size,posy-size);
   ctx.lineTo(posx+size,posy+size);
   ctx.stroke();
@@ -551,31 +553,35 @@ function setDetectorPositionWavelength() {
     adjusted_y = posy;
     // <span id="Coords" class="data">Cursor location</span>
     // document.getElementById("Coords").innerHTML = "Cursor location: ("+adjusted_x.toString()+", "+adjusted_y.toString()+")";
-    ord = findOrderIndex(adjusted_x,adjusted_y);
-    document.getElementById("OrderNum").innerHTML = "Order: "+order[ord].toString();
-    // console.log(ord);
-    minx = endpoints[ord][0];
-    maxx = endpoints[ord][2];
+    
 
-    if (adjusted_x < minx) adjusted_x = minx;
-    if (adjusted_x > maxx) adjusted_x = maxx;
+    if (posx < X_UPPER_LIMIT && posy < Y_UPPER_LIMIT) {
+      ord = findOrderIndex(adjusted_x,adjusted_y);
+      document.getElementById("OrderNum").innerHTML = "Order: "+order[ord].toString();
+      // console.log(ord);
+      minx = endpoints[ord][0];
+      maxx = endpoints[ord][2];
 
-    lambda = (findLambda(ord,adjusted_x,adjusted_y)).toPrecision(PRECISION);
-    document.getElementById("Wavelength").innerHTML = "Lambda = "+lambda.toString()+" \u212b";
+      if (adjusted_x < minx) adjusted_x = minx;
+      if (adjusted_x > maxx) adjusted_x = maxx;
 
-    if(drag) {
-      var detectordraggable = document.getElementById('detector');
-      detectordraggable.style.left = (adjusted_x-detectordim[0]/2).toString() + 'px';
-      detectordraggable.style.top = (adjusted_y-detectordim[1]/2).toString() + 'px';
+      lambda = (findLambda(ord,adjusted_x,adjusted_y)).toPrecision(PRECISION);
+      document.getElementById("Wavelength").innerHTML = "Lambda = "+lambda.toString()+" \u212b";
 
-      document.getElementById("lambdainput").value = lambda.toString();
+      if(drag) {
+        var detectordraggable = document.getElementById('detector');
+        detectordraggable.style.left = (adjusted_x-detectordim[0]/2).toString() + 'px';
+        detectordraggable.style.top = (adjusted_y-detectordim[1]/2).toString() + 'px';
 
-      ecangle = ((180/Math.PI)*(Math.asin( order[ord] * lambda / ( 2.0 * angstroms_per_micron * ecsigma * Math.cos( (Math.PI/180)*ecthetad) ))) - ecdeltad).toPrecision(PRECISION);
-      xdangle = ((180/Math.PI)*(Math.asin( lambda / ( 2.0 * angstroms_per_micron * xdsigma * Math.cos( (Math.PI/180)*(xdalfbet*0.5) )))) - xddeltad).toPrecision(PRECISION);
-      document.getElementById("EchelleAngle").innerHTML = "Echelle Angle:<br>"+ecangle.toString()+String.fromCharCode(176);
-      document.getElementById("CrossDisperserAngle").innerHTML = "Cross Disperser Angle:<br>"+xdangle.toString()+String.fromCharCode(176);    
+        document.getElementById("lambdainput").value = lambda.toString();
+
+        ecangle = ((180/Math.PI)*(Math.asin( order[ord] * lambda / ( 2.0 * angstroms_per_micron * ecsigma * Math.cos( (Math.PI/180)*ecthetad) ))) - ecdeltad).toPrecision(PRECISION);
+        xdangle = ((180/Math.PI)*(Math.asin( lambda / ( 2.0 * angstroms_per_micron * xdsigma * Math.cos( (Math.PI/180)*(xdalfbet*0.5) )))) - xddeltad).toPrecision(PRECISION);
+        document.getElementById("EchelleAngle").innerHTML = "Echelle Angle:<br>"+ecangle.toString()+String.fromCharCode(176);
+        document.getElementById("CrossDisperserAngle").innerHTML = "Cross Disperser Angle:<br>"+xdangle.toString()+String.fromCharCode(176);    
+        document.getElementById("CentralOrder").innerHTML = "Central Order: "+order[ord].toString();
+      }
     }
-
   }
 
   document.onclick = handleClick;

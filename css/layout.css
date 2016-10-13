@@ -28,6 +28,7 @@ span {
 #header {
   height: 15vh;
   margin: 0 auto;
+  margin-bottom: 20px;
   display: table;
 }
 
@@ -54,7 +55,7 @@ span {
 
 #container {
   float: left;
-  width: 40%;
+  width: 55%;
   height: 97%;
   margin: 10px;
   overflow: scroll;
@@ -65,22 +66,22 @@ span {
   left:0px;
   top:0px;
   /*height:100%;*/
-  background-color: rgba(120,120,120,0.2);
+  background-color: rgba(120,120,120,0.3);
 }
 
 .data {
   color: black;
-  padding: 10px;
+  padding: 7px;
   background-color: white;
   display: block;
   position: relative;
   text-align: center;
   border-radius: 3px;
-  -webkit-box-shadow: 0 30px 30px rgba(0, 0, 0, 0.33);
-  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.33);
+  -webkit-box-shadow: 0 30px 30px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.25);
   padding-top: 10px;
-  padding-left: 20px;
-  padding-right: 30px;
+  /*padding-left: 15px;
+  padding-right: 15px;*/
   padding-bottom: 10px;
   width: 75%;
   opacity: 0.8;
@@ -92,15 +93,17 @@ span {
  /* position: relative;
   padding-top: 10px;*/
   float: left;
-  width: 50%;
+  width: 40%;
   height: 100vh;
   display: inline-block;
   padding-left: 50px;
 }
 
 #ui-top {
-  margin-bottom: 20px;
-  min-height:35%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  min-height:33%;
+  width: 100%;
 }
 
 #ui-bottom {
@@ -108,7 +111,7 @@ span {
   width: 100%;
   max-height: 50%;
   clear: none;
-  margin: 0 auto;
+  margin: auto;
 }
 
 .interface {
@@ -119,24 +122,31 @@ span {
 }
 .d1 {
   display: inline-block;
+  float:left;
   height:100%;
+  width:40%;
 }
 .d2 {
   display: inline-block;
-  float: right;
+  float: left;
   height: 100%;
+  width:50%;
 }
 #spectra {
-  width: 70%;
+  width: 60%;
   height: 100%;
 }
-#spectra-gif #popup {
+#spectra #popup {
   visibility: hidden;
   position:absolute;
   z-index: 1;
+  transform: translate(-50%,-50%);
 }
-#spectra-gif:hover #popup {
+#spectra:hover #popup {
   visibility: visible;
+}
+#input {
+  margin-left: 15px;
 }
 
 #settings {
@@ -144,8 +154,11 @@ span {
   position:relative;
 }
 #toggle {
-  position: absolute;
-  transform: translate(0%,30%);
+/*  position: absolute;
+  transform: translate(-25%,30%);*/
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 0px;
 }
 
 .settings-item {
@@ -216,9 +229,9 @@ input[type="button"] {
   -khtml-user-select: none;     
   user-select: none;
   /*border: 2px solid black;*/
-  opacity: 0.5;
+  opacity: 0.35;
   display: block;
-  filter: alpha(opacity=50); /* For IE8 and earlier */
+  filter: alpha(opacity=35); /* For IE8 and earlier */
 }
 
 #draggable {
