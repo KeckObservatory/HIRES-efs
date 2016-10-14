@@ -9,7 +9,7 @@
 
 <div id="full">
   <div id='container' >    
-    <div id="detector" onmousedown="drag=true;">
+    <div id="detector" onmousedown="Drag();">
       <div id="draggable" >
         <div class="detectorbox" id="first">ccd3</div>
         <div class="detectorbox">ccd2</div>
@@ -85,6 +85,19 @@
           <input id="FindCrossDisperserAngle" type="text" value=0 /><br>
           <input class="SetDetectorPosition" type="button" value="Go To Angle" onClick="setDetectorPositionAngle();") />
         </div><br>
+
+        <div class="data">
+          <div class="dropdown">
+            <button>More</button>
+
+            <ul class="dropdown-menu">
+                <li><a href="#home">Help</a></li>
+                <li><a href="#about">Export</a></li>
+                <li><a href="#contact">Reset</a></li>
+            </ul>
+          </div>
+
+        </div>
 
       </div>
 

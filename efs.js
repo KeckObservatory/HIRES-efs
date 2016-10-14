@@ -95,6 +95,9 @@ var xdangle;
 var drag=false;
 var clear=false;
 
+var xdragoffset;
+var ydragoffset;
+
 var detectordim = [0,0];
 
 var plottedwavelengths = [];
@@ -573,16 +576,20 @@ function setDetectorPositionWavelength() {
 
       if(drag) {
         var detectordraggable = document.getElementById('detector');
-        detectordraggable.style.left = (e.pageX-detectordim[0]/2).toString() + 'px';
-        detectordraggable.style.top = (e.pageY-detectordim[1]/2).toString() + 'px';
+        var detectorposition = [Math.round(e.pageX - xdragoffset - detectordim[0]/2),Math.round(e.pageY- ydragoffset - detectordim[1]/2)];
+        detectordraggable.style.left = detectorposition[0].toString() + 'px';
+        detectordraggable.style.top = detectorposition[1].toString() + 'px';
 
-        document.getElementById("lambdainput").value = lambda.toString();
+        var detord = findOrderIndex(detectorposition[0]+detectordim[0]/2,detectorposition[1]+detectordim[1]/2);
+        var detlambda = findLambda(detord,detectorposition[0]+Math.round(detectordim[0]/2),detectorposition[1]+Math.round(detectordim[1]/2));
 
-        ecangle = ((180/Math.PI)*(Math.asin( order[ord] * lambda / ( 2.0 * angstroms_per_micron * ecsigma * Math.cos( (Math.PI/180)*ecthetad) ))) - ecdeltad).toPrecision(PRECISION);
-        xdangle = ((180/Math.PI)*(Math.asin( lambda / ( 2.0 * angstroms_per_micron * xdsigma * Math.cos( (Math.PI/180)*(xdalfbet*0.5) )))) - xddeltad).toPrecision(PRECISION);
+        document.getElementById("lambdainput").value = detlambda.toString();
+
+        ecangle = ((180/Math.PI)*(Math.asin( order[detord] * detlambda / ( 2.0 * angstroms_per_micron * ecsigma * Math.cos( (Math.PI/180)*ecthetad) ))) - ecdeltad).toPrecision(PRECISION);
+        xdangle = ((180/Math.PI)*(Math.asin( detlambda / ( 2.0 * angstroms_per_micron * xdsigma * Math.cos( (Math.PI/180)*(xdalfbet*0.5) )))) - xddeltad).toPrecision(PRECISION);
         document.getElementById("EchelleAngle").innerHTML = "Echelle Angle:<br>"+ecangle.toString()+String.fromCharCode(176);
         document.getElementById("CrossDisperserAngle").innerHTML = "Cross Disperser Angle:<br>"+xdangle.toString()+String.fromCharCode(176);    
-        document.getElementById("CentralOrder").innerHTML = "Central Order: "+order[ord].toString();
+        document.getElementById("CentralOrder").innerHTML = "Central Order: "+order[detord].toString();
       }
     }
   }
@@ -639,6 +646,16 @@ function clearMarkers() {
   update();
 }
 
+function Drag() {
+  drag=true;
+  var e = window.event;
+  xdragoffset = Math.round( (e.pageX + document.getElementById("container").scrollLeft - X_LOWER_LIMIT) - parseInt(document.getElementById("detector").style.left) - detectordim[0]/2);
+  ydragoffset = Math.round((e.pageY + document.getElementById("container").scrollTop - Y_LOWER_LIMIT) - parseInt(document.getElementById("detector").style.top) - detectordim[1]/2);
+
+  console.log(xdragoffset.toString()+", "+ydragoffset.toString());
+
+}
+
 function update() {
     // console.log("updating echelle");
     ZOOM = parseFloat(document.getElementById("zoom").value)/2;
@@ -686,3 +703,5 @@ function updateAllAngles() {
   setEchelleAngle(document.getElementById("FindEchelleAngle").value);
   setCrossDisperserAngle(document.getElementById("FindCrossDisperserAngle").value);
 }
+
+

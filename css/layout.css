@@ -15,10 +15,6 @@ input[type="text"]{
   text-align: center;
 }
 
-span {
-  height:20px;
-}
-
 #full {
   height: 100vh;
   width: 100%;
@@ -65,7 +61,6 @@ span {
 #echelle {
   left:0px;
   top:0px;
-  /*height:100%;*/
   background-color: rgba(120,120,120,0.3);
 }
 
@@ -80,18 +75,12 @@ span {
   -webkit-box-shadow: 0 30px 30px rgba(0, 0, 0, 0.25);
   box-shadow: 0 30px 30px rgba(0, 0, 0, 0.25);
   padding-top: 10px;
-  /*padding-left: 15px;
-  padding-right: 15px;*/
   padding-bottom: 10px;
   width: 75%;
-  opacity: 0.8;
+  opacity:1;
 }
 
 #ui {
-  /*display: inline-block;
-  float: left;*/
- /* position: relative;
-  padding-top: 10px;*/
   float: left;
   width: 40%;
   height: 100vh;
@@ -107,7 +96,7 @@ span {
 }
 
 #ui-bottom {
-  /*margin: 0 auto;*/
+  margin: 0 auto;
   width: 100%;
   max-height: 50%;
   clear: none;
@@ -243,6 +232,35 @@ input[type="button"]:hover {
   background:linear-gradient(to bottom, #1d9bc9 5%, #0658ba 100%);
 }
 
+select {
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>");
+  background-color:#3498DB;
+  background-repeat:no-repeat;
+  background-position: right 5px top 5px;
+  background-size: 8px 8px;
+  padding:2px 20px 2px 10px;
+  text-align:center;
+  border-radius:3px;
+  -webkit-border-radius:3px;
+  -webkit-appearance: none;
+  border:1px solid gray;
+  outline:0;
+  -webkit-transition:0.3s ease all;
+     -moz-transition:0.3s ease all;
+      -ms-transition:0.3s ease all;
+       -o-transition:0.3s ease all;
+          transition:0.3s ease all;
+}
+#switchSlit {
+  background-color:#dfdfdf;
+}
+#switchSlit:hover {
+  background-color:#afafaf;
+}
+select:focus, select:active {
+  outline:0;
+}
+
 #detector {
   position: absolute;
   background-color: #e0eeee;
@@ -252,7 +270,6 @@ input[type="button"]:hover {
   -ms-user-select: none;
   -khtml-user-select: none;     
   user-select: none;
-  /*border: 2px solid black;*/
   opacity: 0.35;
   display: block;
   filter: alpha(opacity=35); /* For IE8 and earlier */
@@ -271,7 +288,6 @@ input[type="button"]:hover {
   border-right: 1px solid black;
   border-top: 1px solid black;
   border-bottom: 0px;
-  font-family: ‘DroidSans-Bold’;
   text-transform:uppercase;
   font-size: 10px;
 }
@@ -284,10 +300,60 @@ input[type="button"]:hover {
   border-bottom: 1px solid black;
 }
 
-#wvtracker {
-  position: absolute;
-  width:5px;
-  height:5px;
-  background-color: black;
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown .dropdown-menu {
+    position: absolute;
+    display: none;
+    margin: 0;
+    bottom:0;
+
+    list-style: none; /** Remove list bullets */
+    width: 100%; /** Set the width to 100% of it's parent */
+    padding: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/** Button Styles **/
+.dropdown button {
+    /*background: #FF6223;*/
+    border: none;
+    margin: 0;
+    padding: 0.2em 4em;
+    font-size: 0.8em;
+    font-family: 'Open Sans', sans-serif;
+
+    border-radius:3px;
+    -webkit-border-radius:3px;
+    -webkit-appearance: none;
+    border:1px solid gray;
+
+    background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>");
+    background-color:#eaeaea;
+    background-repeat:no-repeat;
+    background-position: right 0.5em top 0.75em;
+    background-size: 8px 8px;
+
+}
+
+/** List Item Styles **/
+.dropdown a {
+    display: block;
+    padding: 1em;
+    background-color: #CCCCCC;
+    color: #333333;
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+/** List Item Hover Styles **/
+.dropdown a:hover {
+    background: #BBBBBB;
 }
 
