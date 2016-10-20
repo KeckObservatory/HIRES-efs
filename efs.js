@@ -583,7 +583,7 @@ function setDetectorPositionWavelength() {
         var detord = findOrderIndex(detectorposition[0]+detectordim[0]/2,detectorposition[1]+detectordim[1]/2);
         var detlambda = findLambda(detord,detectorposition[0]+Math.round(detectordim[0]/2),detectorposition[1]+Math.round(detectordim[1]/2));
 
-        document.getElementById("lambdainput").value = detlambda.toString();
+        document.getElementById("lambdainput").value = detlambda.toPrecision(PRECISION).toString();
 
         ecangle = ((180/Math.PI)*(Math.asin( order[detord] * detlambda / ( 2.0 * angstroms_per_micron * ecsigma * Math.cos( (Math.PI/180)*ecthetad) ))) - ecdeltad).toPrecision(PRECISION);
         xdangle = ((180/Math.PI)*(Math.asin( detlambda / ( 2.0 * angstroms_per_micron * xdsigma * Math.cos( (Math.PI/180)*(xdalfbet*0.5) )))) - xddeltad).toPrecision(PRECISION);
