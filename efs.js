@@ -1,3 +1,5 @@
+/* HIRES Echelle Format Simulator */
+
 var echellecanvas = document.getElementById("echelle");
 // var echeight = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("height"));
 var ecwidth = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("width"));
@@ -76,10 +78,7 @@ var X_LOWER_LIMIT = 10;          //  Lower limit on coord in X direction
 var X_UPPER_LIMIT = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("width"));      //  Upper limit on coord in X direction
 var Y_LOWER_LIMIT = 10;          //  Lower limit on coord in Y direction
 var Y_UPPER_LIMIT = echellerect.bottom;
-// var ZOOM = 4.5*((echellerect.right-echellerect.left)/600);
 var ZOOM=4.5;
-
-// console.log(ZOOM);
 
 var endpoints;
 var drawable;
@@ -119,23 +118,23 @@ function transform_screen_pixels_to_mm( px, py) {
 function drawEchelle() {
 
   if ( color === "red" ) {
-
-    sigma = 18.984;
-    delta = 70.53;
-    theta = 5.000;
     
     max_wavelength = 10043.0;
     min_wavelength = 2983.0;
     
     camera_focal_length = 0.763;
     collimator_focal_length = 4.155;
+
+    sigma = 18.984; // ruling density^(-1) in microns
+    delta = 70.53; // echelle blaze angle
+    theta = 5.000;
     
-    xddeltad = 4.449;
+    xddeltad = 4.449; // cross disperser constants
     xdalfbet = 40.0;
     xdsigma  = 4.0;
     xdsigmai = 250.0;
     
-    ecsigma = 18.984;
+    ecsigma = 18.984; // echelle constants
     ecthetad = 5.000;
     ecdeltad = 70.53;
 
@@ -144,16 +143,16 @@ function drawEchelle() {
   }
 
   else if (color == "blue") {
-
-    sigma = 18.984;
-    delta = 70.58;
-    theta = 5.000;
     
     max_wavelength = 6666.0;
     min_wavelength = 2983.0;
     
     camera_focal_length = 0.763;
     collimator_focal_length = 4.155;
+
+    sigma = 18.984;
+    delta = 70.58;
+    theta = 5.000;
     
     xddeltad = 4.46;
     xdalfbet = 40.0;
@@ -373,6 +372,8 @@ function findLambdaOrderIndex(wav) {
     }
   }
 
+  return number_of_orders;
+
 }
 
 function findLambdaLocation(waveln, set, add) {
@@ -576,11 +577,13 @@ function setDetectorPositionWavelength() {
 
       if(drag) {
         var detectordraggable = document.getElementById('detector');
-        var detectorposition = [Math.round(e.pageX - xdragoffset - detectordim[0]/2),Math.round(e.pageY- ydragoffset - detectordim[1]/2)];
+        var detectorposition = [Math.round(e.pageX - xdragoffset - detectordim[0]/2),Math.round(e.pageY - ydragoffset - detectordim[1]/2)];
         detectordraggable.style.left = detectorposition[0].toString() + 'px';
         detectordraggable.style.top = detectorposition[1].toString() + 'px';
 
-        var detord = findOrderIndex(detectorposition[0]+detectordim[0]/2,detectorposition[1]+detectordim[1]/2);
+        detectorposition_adjusted = [detectorposition[0]+document.getElementById("container").scrollLeft-X_LOWER_LIMIT+detectordim[0]/2,detectorposition[1]+document.getElementById("container").scrollTop-Y_LOWER_LIMIT+detectordim[1]/2]
+
+        var detord = findOrderIndex(detectorposition_adjusted[0],detectorposition_adjusted[1]);
         var detlambda = findLambda(detord,detectorposition[0]+Math.round(detectordim[0]/2),detectorposition[1]+Math.round(detectordim[1]/2));
 
         document.getElementById("lambdainput").value = detlambda.toPrecision(PRECISION).toString();
@@ -649,8 +652,8 @@ function clearMarkers() {
 function Drag() {
   drag=true;
   var e = window.event;
-  xdragoffset = Math.round( (e.pageX + document.getElementById("container").scrollLeft - X_LOWER_LIMIT) - parseInt(document.getElementById("detector").style.left) - detectordim[0]/2);
-  ydragoffset = Math.round((e.pageY + document.getElementById("container").scrollTop - Y_LOWER_LIMIT) - parseInt(document.getElementById("detector").style.top) - detectordim[1]/2);
+  xdragoffset = Math.round( (e.pageX /*+ document.getElementById("container").scrollLeft*/ - X_LOWER_LIMIT) - parseInt(document.getElementById("detector").style.left) - detectordim[0]/2);
+  ydragoffset = Math.round((e.pageY /*+ document.getElementById("container").scrollTop*/ - Y_LOWER_LIMIT) - parseInt(document.getElementById("detector").style.top) - detectordim[1]/2);
 
   console.log(xdragoffset.toString()+", "+ydragoffset.toString());
 
