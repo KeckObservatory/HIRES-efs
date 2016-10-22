@@ -9,10 +9,8 @@ echellecanvas.width=1.5 * ecwidth;
 
 var ctx = echellecanvas.getContext("2d");
 
-var spectrumcanvas = document.getElementById("spectra-gif");
-var spectrumctx = spectrumcanvas.getContext("2d");
-
-var spectrumgraph = new Image();
+var spectrumgraph = document.getElementById("spectrumgraph");
+var url;
 
 const angstroms_per_micron = 10000;
 const mm_per_meter = 1000;
@@ -618,18 +616,16 @@ function setDetectorPositionWavelength() {
 
     if (!drag) {
       if (posx < X_UPPER_LIMIT && posy < Y_UPPER_LIMIT) {
-        spectrumgraph.onload = function(){
-          // var dim = {
-          //   width:parseInt(window.getComputedStyle(spectrumcanvas,null).getPropertyValue("width")),
-          //   height:parseInt(window.getComputedStyle(spectrumcanvas,null).getPropertyValue("width"))
-          // };
-          spectrumctx.drawImage(spectrumgraph,0,0,spectrumcanvas.width,spectrumcanvas.height);
-          // console.log(dim.width);
-          // console.log(dim.height);
-        };
+        // spectrumgraph.onload = function(){
+          url = "http://www.keck.hawaii.edu/realpublic/inst/hires/order"+order[ord].toString()+".pdf?";
+          console.log(url);
+        // };   
+        spectrumgraph.src = url;
+          
+        // order"+order[ord].toString()+".gif";
+        document.getElementById("popup").src = url;
 
-        spectrumgraph.src = "spectra/order"+order[ord].toString()+".gif";
-        document.getElementById("popup").src = "spectra/order"+order[ord].toString()+".gif";
+        
       }
     }
 
