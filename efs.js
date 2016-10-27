@@ -27,6 +27,8 @@ const ARCSECONDS_PER_PIXEL = 0.191;
 const MARKER_COLOR = "white";
 
 var color = "red";
+var ZOOM=4.5;
+var border_color = 'black';
 
 var sigma, delta, theta;    // inputs to the base calculation (Schroeder, 87)
 var max_wavelength;     // Longest waelength in Angstroms.
@@ -76,7 +78,6 @@ var X_LOWER_LIMIT = 10;          //  Lower limit on coord in X direction
 var X_UPPER_LIMIT = parseInt(window.getComputedStyle(document.getElementById("container"),null).getPropertyValue("width"));      //  Upper limit on coord in X direction
 var Y_LOWER_LIMIT = 10;          //  Lower limit on coord in Y direction
 var Y_UPPER_LIMIT = echellerect.bottom;
-var ZOOM=4.5;
 
 var endpoints;
 var drawable;
@@ -115,6 +116,12 @@ function transform_screen_pixels_to_mm( px, py) {
 
 function drawEchelle() {
 
+  var detector_gap_px = Math.ceil(ZOOM*DETECTOR_GAP).toString()+"px solid";
+  document.getElementById("first").style.borderBottom = detector_gap_px;
+  document.getElementById("final").style.borderTop = detector_gap_px;
+
+  // console.log(detector_gap_px);
+
   if ( color === "red" ) {
     
     max_wavelength = 10043.0;
@@ -136,6 +143,7 @@ function drawEchelle() {
     ecthetad = 5.000;
     ecdeltad = 70.53;
 
+    // center in pixels
     FOCAL_PLANE_SCREEN_POSITION = [ X_LOWER_LIMIT + 225 + (20*ZOOM), Y_LOWER_LIMIT + 275 + (35*ZOOM)];
 
   }
@@ -695,6 +703,20 @@ function detectorTog() {
   else {
     detector.style.display = "block";
     document.getElementById("toggleDetector").value = "Hide Detector";
+  }
+}
+
+function highlight() {
+
+  if(border_color == "cyan") {
+    document.getElementById('first').style.borderBottomColor = "black";
+    document.getElementById("final").style.borderTopColor = "black";
+    border_color = "black";
+  }
+  else if (border_color == "black") {
+    document.getElementById('first').style.borderBottomColor = "cyan";
+    document.getElementById("final").style.borderTopColor = "cyan";
+    border_color = "cyan";
   }
 }
 
