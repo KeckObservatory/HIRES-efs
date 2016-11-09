@@ -80,11 +80,11 @@
           <input class="ClearMarkers" type="button" value="Clear" onClick="clearMarkers();") />
         </div><br>
 
-        <div class="data">Set Echelle Angle: 
+        <div class="data"><form onsubmit="return false" autocomplete="off">Set Echelle Angle: 
           <input id="FindEchelleAngle" type="text" value=0 /><br>
           Set Cross-disperser Angle: 
           <input id="FindCrossDisperserAngle" type="text" value=0 /><br>
-          <input class="SetDetectorPosition" type="button" value="Go To Angle" onClick="setDetectorPositionAngle();") />
+          <input class="SetDetectorPosition" type="submit" value="Go To Angle" onClick="setDetectorPositionAngle();") /></form>
         </div><br>
 
         <div class="data">
