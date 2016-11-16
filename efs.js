@@ -487,8 +487,8 @@ function setDetectorPositionWavelength() {
   var setlambda = parseFloat(document.getElementById("lambdainput").value);
   var detcoords = findLambdaLocation(setlambda, false,false);
   var detectordraggable = document.getElementById('detector');
-  detectordraggable.style.left = (detcoords[0]-detectordim[0]/2).toString() + 'px';
-  detectordraggable.style.top = (detcoords[1]-detectordim[1]/2).toString() + 'px';
+  detectordraggable.style.left = (detcoords[0]-document.getElementById("container").scrollLeft-detectordim[0]/2).toString() + 'px';
+  detectordraggable.style.top = (detcoords[1]-document.getElementById("container").scrollTop-detectordim[1]/2).toString() + 'px';
 
   ord = findOrderIndex(detcoords[0],detcoords[1]);
 
