@@ -476,8 +476,8 @@ function setDetectorPositionAngle() {
   // console.log(xdanglelambda.toString()+": "+findLambdaLocation(xdanglelambda,false).toString());
 
   var detectordraggable = document.getElementById('detector');
-  detectordraggable.style.left = (X_LOWER_LIMIT+lambdalocation[0]-detectordim[0]/2).toString() + 'px';
-  detectordraggable.style.top = (Y_LOWER_LIMIT+lambdalocation[1]-detectordim[1]/2).toString() + 'px';
+  detectordraggable.style.left = (X_LOWER_LIMIT+lambdalocation[0]-document.getElementById("container").scrollLeft-detectordim[0]/2).toString() + 'px';
+  detectordraggable.style.top = (Y_LOWER_LIMIT+lambdalocation[1]-document.getElementById("container").scrollTop-detectordim[1]/2).toString() + 'px';
 
 }
 
