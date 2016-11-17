@@ -625,7 +625,7 @@ function setDetectorPositionWavelength() {
     if (!drag) {
       if (posx < X_UPPER_LIMIT && posy < Y_UPPER_LIMIT) {
         // spectrumgraph.onload = function(){
-          url = "http://www.keck.hawaii.edu/realpublic/inst/hires/order"+order[ord].toString()+".pdf?";
+          url = "http://www2.keck.hawaii.edu/inst/hires/order"+order[ord].toString()+".pdf?";
           console.log(url);
         // };   
         spectrumgraph.src = url;
