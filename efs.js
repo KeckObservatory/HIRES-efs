@@ -100,6 +100,8 @@ var detectordim = [0,0];
 
 var plottedwavelengths = [];
 
+var canimg;
+
 function transform_mm_to_screen_pixels(mm) {
     var pixels = [0,0];
     pixels[0] = Math.round(FOCAL_PLANE_SCREEN_POSITION[0] + ( ZOOM * mm[0] )) + X_LOWER_LIMIT;
@@ -622,6 +624,12 @@ function setDetectorPositionWavelength() {
       posy = e.clientY + document.getElementById("container").scrollTop - Y_LOWER_LIMIT;
     }
 
+    // html2canvas(document.getElementById('container'), {
+    //  onrendered: function(canvas) {
+    //     document.getElementById('export').href = canvas.toDataURL()
+    //   }
+    // });
+
     if (!drag) {
       if (posx < X_UPPER_LIMIT && posy < Y_UPPER_LIMIT) {
         // spectrumgraph.onload = function(){
@@ -661,6 +669,14 @@ function Drag() {
 
   console.log(xdragoffset.toString()+", "+ydragoffset.toString());
 
+}
+
+function exportEchelle() {
+    html2canvas(document.getElementById('container'), {
+   onrendered: function(canvas) {
+      window.open(canvas.toDataURL())
+  },background:'#89c0d6'
+  });
 }
 
 function update() {
