@@ -19,7 +19,7 @@ const MAXO = 100;
 
 const DETECTOR_GAP = 0.1;
 const MM_PER_PIXEL = 0.015;
-const PRECISION = 4;
+const PRECISION = 5;
 
 // const arcsec_width = 7;
 const ARCSECONDS_PER_PIXEL = 0.191;
@@ -203,8 +203,8 @@ function drawEchelle() {
   drawable=[];
 
   base = 2.0 * sigma * Math.sin( delta * Math.PI/180 ) * Math.cos( theta * Math.PI/180 );
-  max_order_number = Math.round( angstroms_per_micron * base / min_wavelength + 0.5 ) + 1;
-  min_order_number = Math.round(angstroms_per_micron * base / max_wavelength - 0.5);
+  max_order_number = Math.round( angstroms_per_micron * base / min_wavelength + 0.5 ) ;
+  min_order_number = Math.round(angstroms_per_micron * base / max_wavelength - 0.5)-1;
   number_of_orders = (max_order_number - min_order_number - 1);
 
   //console.log("drawing: "+number_of_orders.toString()+" "+color+" orders from "+min_order_number.toString()+" to "+max_order_number.toString());
