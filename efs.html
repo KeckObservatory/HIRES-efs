@@ -2,14 +2,15 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <title>HIRES Echelle Format Simulator</title>
   <link rel=stylesheet type="text/css" href="css/layout.css">
-  <script type="text/javascript" src="html2canvas.js"></script> 
+  <script type="text/javascript" src="html2canvas.js"></script>
 </head>
 <body>
 
 <div id="full">
-  <div id='container' >    
+  <div id='container' >
     <div id="detector" onmousedown="Drag();">
       <div id="draggable" >
         <div class="detectorbox" id="first">ccd3</div>
@@ -32,11 +33,11 @@
 
 
 
-    <div id="ui-top"> 
+    <div id="ui-top">
 
       <div id="spectra" class="interface d1">
         <iframe id="spectrumgraph" class="data" src="" ></iframe>
-        <iframe id="popup" src=""></iframe>
+        <iframe id="popup" src="" onclick=""></iframe>
       </div>
 
       <div id="settings" class="interface d2">
@@ -81,9 +82,9 @@
           <input class="ClearMarkers" type="button" value="Clear" onClick="clearMarkers();") />
         </div><br>
 
-        <div class="data"><form onsubmit="return false" autocomplete="off">Set Echelle Angle: 
+        <div class="data"><form onsubmit="return false" autocomplete="off">Set Echelle Angle:
           <input id="FindEchelleAngle" type="text" value=0 /><br>
-          Set Cross-disperser Angle: 
+          Set Cross-disperser Angle:
           <input id="FindCrossDisperserAngle" type="text" value=0 /><br>
           <input class="SetDetectorPosition" type="submit" value="Go To Angle" onClick="setDetectorPositionAngle();") /></form>
         </div><br>
@@ -95,7 +96,7 @@
             <ul class="dropdown-menu">
                 <li><a href="https://www2.keck.hawaii.edu/inst/hires/" target="_blank">HIRES Home</a></li>
                 <li><a href="./efs.html">Reset</a></li>
-                <li><a id='export' href="#" onclick="exportEchelle();">Export</a></li>
+                <li><a id='export' href="#" onclick="exportEchelle();">Export (Firefox/Safari only)</a></li>
             </ul>
           </div>
 

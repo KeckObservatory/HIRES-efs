@@ -127,6 +127,7 @@ input[type="text"]{
 }
 #spectra #popup {
   visibility: hidden;
+  display:none;
   position:absolute;
   z-index: 1;
   transform: translate(-50%,-50%);
@@ -134,7 +135,9 @@ input[type="text"]{
   height: 500px;
 }
 #spectra:hover #popup {
+  /*has to be both becase Safari is weird*/
   visibility: visible;
+  display: block;
 }
 #input {
   margin-left: 15px;
@@ -298,7 +301,7 @@ select:focus, select:active {
   -moz-user-select: none;
   -o-user-select: none;
   -ms-user-select: none;
-  -khtml-user-select: none;     
+  -khtml-user-select: none;
   user-select: none;
   /*opacity: 0.35;*/
   display: block;
@@ -389,4 +392,3 @@ select:focus, select:active {
 .dropdown a:hover {
     background: #BBBBBB;
 }
-
