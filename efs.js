@@ -177,6 +177,8 @@ function drawEchelle() {
 
   var detector = document.getElementById("draggable");
   detectordim = [(4096 *  MM_PER_PIXEL * ZOOM),3*(2048 * MM_PER_PIXEL * ZOOM +1)];
+  detector.width = detectordim[0];
+  detector.height = detectordim[1];
   detector.style.width = detectordim[0].toString()+'px';
   detector.style.height = detectordim[1].toString()+'px';
 
@@ -272,7 +274,7 @@ function drawEchelle() {
   }
 
   if (color=="red") ctx.fillStyle = 'rgba(255,0,0,0.5)';
-  else if (color=="blue") ctx.fillStyle = 'rgba(0,159,255,0.5)';
+  else if (color=="blue") ctx.fillStyle = 'rgba(0,255,255,0.5)';
 
   ctx.lineWidth = 1;
 
