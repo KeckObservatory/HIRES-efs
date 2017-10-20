@@ -90,8 +90,6 @@ input[type="text"]{
 }
 
 #ui-top {
-  margin-bottom: 10px;
-  margin-top: 10px;
   min-height:30%;
   width: 100%;
 }
@@ -150,7 +148,7 @@ input[type="text"]{
 }
 #toggle {
   position: absolute;
-  transform: translate(-15%,10%);
+  transform: translate(-15%,0%);
   padding-left: 10px;
   padding-right: 10px;
   margin-left: 0px;
